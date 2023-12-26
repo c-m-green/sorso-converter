@@ -1,6 +1,6 @@
-﻿using static SolresolTranslator.Analyzer.SolresolRecords;
+﻿using static SolresolConverter.Analyzer.SolresolRecords;
 
-namespace SolresolTranslator.Converter
+namespace SolresolConverter.Converter
 {
     internal record class CompoundWordRec(SorsoRec ConstituentWords, PartOfSpeech? Override);
 }

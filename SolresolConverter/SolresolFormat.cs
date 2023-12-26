@@ -1,4 +1,4 @@
-﻿namespace SolresolTranslator
+﻿namespace SolresolConverter
 {
     public enum SolresolFormat
     {

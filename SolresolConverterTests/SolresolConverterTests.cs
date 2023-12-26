@@ -1,11 +1,21 @@
 using NUnit.Framework;
+using SolresolConverter;
+using SolresolConverter.Analyzer;
 
-namespace SolresolTranslatorTests
+namespace SolresolConverterTests
 {
     [TestFixture]
-    [TestOf(typeof(Translator))]
-    public class TranslatorTests
+    [TestOf(typeof(InputAnalyzer))]
+    public class WordAnalyzerTests
     {
-        [Test]
+        [TestCase("soda", SolresolFormat.Sorso)]
+        [TestCase("solda", SolresolFormat.Sorso)]
+        [TestCase("sodo", SolresolFormat.Sorso)]
+        [TestCase("doso", SolresolFormat.Sorso)]
+        public void FirstTest_GonnaAddMoreLater_ThisOneShouldWorkTho(string input, SolresolFormat src)
+        {
+            var rec = InputAnalyzer.ReadInputText(input, src);
+            Assert.IsFalse(rec.Words[0].IsValidSorso);
+        }
     }
 }

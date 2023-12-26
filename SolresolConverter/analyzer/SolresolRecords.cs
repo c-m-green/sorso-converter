@@ -1,18 +1,14 @@
-﻿using SolresolTranslator.Converter;
+﻿using SolresolConverter.Converter;
 
-namespace SolresolTranslator.Analyzer
+namespace SolresolConverter.Analyzer
 {
-    internal static class SolresolRecords
+    public static class SolresolRecords
     {
         public record class SyllableRec(SorsoSyllableDegree Syllable, bool IsCapitalized, bool IsAllCaps)
         {
             public virtual bool Equals(SyllableRec? other)
             {
-                if (other == null)
-                {
-                    return false;
-                }
-                return Syllable == other.Syllable;
+                return other != null && Syllable == other.Syllable;
             }
 
             public override int GetHashCode()
@@ -29,11 +25,7 @@ namespace SolresolTranslator.Analyzer
         {
             public virtual bool Equals(WordRec? other)
             {
-                if (other == null)
-                {
-                    return false;
-                }
-                return Syllables.SequenceEqual(other.Syllables) && AccentIdx == other.AccentIdx && InvertedAccentIdx == other.InvertedAccentIdx && PluralIdx == other.PluralIdx && FeminineIdx == other.FeminineIdx;
+                return other != null && Syllables.SequenceEqual(other.Syllables) && AccentIdx == other.AccentIdx && InvertedAccentIdx == other.InvertedAccentIdx && PluralIdx == other.PluralIdx && FeminineIdx == other.FeminineIdx;
             }
 
             public override int GetHashCode()

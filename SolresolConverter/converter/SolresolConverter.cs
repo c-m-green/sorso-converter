@@ -1,7 +1,8 @@
-﻿using SolresolTranslator.Analyzer;
-using SolresolTranslator.Writer;
+﻿using SolresolConverter.Analyzer;
+using SolresolConverter.Writer;
+using static SolresolConverter.Analyzer.SolresolRecords;
 
-namespace SolresolTranslator.Converter
+namespace SolresolConverter.Converter
 {
     public static class SolresolConverter
     {
@@ -36,9 +37,15 @@ namespace SolresolTranslator.Converter
         }
         public static string ConvertSolresol(string text, SolresolFormat src, SolresolFormat dest, List<CompoundWord>? compoundWords = null)
         {
+            var sorsoRec = InputAnalyzer.ReadInputText(text, src);
+            return ConvertSolresol(sorsoRec, dest, compoundWords);
+        }
+
+        public static string ConvertSolresol(SorsoRec sorsoRec, SolresolFormat dest, List<CompoundWord>? compoundWords = null)
+        {
             return dest switch
             {
-                SolresolFormat.SesCmgreen => new SesWkifWriter().Write(WordAnalyzer.ReadInputText(text, src), compoundWords ?? new List<CompoundWord>()),
+                SolresolFormat.SesCmgreen => new SesWkifWriter().Write(sorsoRec, compoundWords ?? new List<CompoundWord>()),
                 _ => throw new NotImplementedException(),
             };
         }

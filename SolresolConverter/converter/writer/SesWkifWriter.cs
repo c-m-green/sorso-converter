@@ -1,11 +1,11 @@
-﻿using SolresolTranslator.Analyzer;
-using SolresolTranslator.Converter;
+﻿using SolresolConverter.Analyzer;
+using SolresolConverter.Converter;
 using System.Globalization;
 using System.Text;
-using static SolresolTranslator.Analyzer.SolresolRecords;
-using static SolresolTranslator.Converter.SolresolConverter;
+using static SolresolConverter.Analyzer.SolresolRecords;
+using static SolresolConverter.Converter.SolresolConverter;
 
-namespace SolresolTranslator.Writer
+namespace SolresolConverter.Writer
 {
     internal class SesWkifWriter : Writer
     {
@@ -19,7 +19,7 @@ namespace SolresolTranslator.Writer
             List<CompoundWordRec> compoundWordRecs = new();
             foreach (var word in compoundWords)
             {
-                var cmpdSorsoRec = WordAnalyzer.ReadInputText(string.Join(' ', word.ConstituentWords.ToArray()), SolresolFormat.Sorso);
+                var cmpdSorsoRec = InputAnalyzer.ReadInputText(string.Join(' ', word.ConstituentWords.ToArray()), SolresolFormat.Sorso);
                 compoundWordRecs.Add(new CompoundWordRec(cmpdSorsoRec, word.PartOfSpeechOverride));
             }
             return WriteText(sorsoRec, compoundWordRecs);

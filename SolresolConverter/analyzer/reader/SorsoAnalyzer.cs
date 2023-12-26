@@ -1,21 +1,12 @@
-﻿using System.Globalization;
-using SolresolTranslator.Converter;
-using static SolresolTranslator.Analyzer.SolresolRecords;
+﻿using SolresolConverter.Converter;
+using System.Globalization;
+using static SolresolConverter.Analyzer.SolresolRecords;
 
-namespace SolresolTranslator.Analyzer
+namespace SolresolConverter.Analyzer
 {
-    internal static class WordAnalyzer
-    {      
-        public static SorsoRec ReadInputText(string text, SolresolFormat src)
-        {
-            return src switch
-            {
-                SolresolFormat.Sorso => ReadSolresol(text),
-                _ => throw new NotImplementedException(),
-            };
-        }
-
-        private static SorsoRec ReadSolresol(string text)
+    internal class SorsoAnalyzer
+    {
+        public SorsoRec Analyze(string text)
         {
             const int maxSyllableLength = 5;
             // TODO Place these in a Constants class

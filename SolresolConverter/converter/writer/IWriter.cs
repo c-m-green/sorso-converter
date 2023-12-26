@@ -1,6 +1,6 @@
-﻿using static SolresolTranslator.Analyzer.SolresolRecords;
+﻿using static SolresolConverter.Analyzer.SolresolRecords;
 
-namespace SolresolTranslator.Writer
+namespace SolresolConverter.Writer
 {
     internal interface IWriter
     {
