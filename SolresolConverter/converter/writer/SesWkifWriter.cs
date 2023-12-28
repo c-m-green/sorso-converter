@@ -3,7 +3,7 @@ using SolresolConverter.Converter;
 using System.Globalization;
 using System.Text;
 using static SolresolConverter.Analyzer.SolresolRecords;
-using static SolresolConverter.Converter.SolresolConverter;
+using static SolresolConverter.Converter.Converter;
 
 namespace SolresolConverter.Writer
 {

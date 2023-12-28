@@ -4,7 +4,7 @@ using static SolresolConverter.Analyzer.SolresolRecords;
 
 namespace SolresolConverter.Converter
 {
-    public static class SolresolConverter
+    public static class Converter
     {
         public struct CompoundWord
         {
