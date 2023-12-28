@@ -181,7 +181,7 @@ namespace SolresolConverter.Writer
                     // Step through each syllable and add the appropriate character at each step.
                     for (int syllableIdx = 0; syllableIdx < currentWord.Syllables.Count; syllableIdx++)
                     {
-                        int sesIdx = (int)currentWord.Syllables[syllableIdx].Syllable;
+                        int sesIdx = (int)currentWord.Syllables[syllableIdx].Degree;
                         var syllable = currentWord.Syllables[syllableIdx];
                         if (inCompoundWord)
                         {

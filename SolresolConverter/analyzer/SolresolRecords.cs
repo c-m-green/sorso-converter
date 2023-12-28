@@ -4,11 +4,11 @@ namespace SolresolConverter.Analyzer
 {
     public static class SolresolRecords
     {
-        public record class SyllableRec(SorsoSyllableDegree Syllable, bool IsCapitalized, bool IsAllCaps)
+        public record class SyllableRec(SorsoSyllableDegree Degree, bool IsCapitalized, bool IsAllCaps)
         {
             public virtual bool Equals(SyllableRec? other)
             {
-                return other != null && Syllable == other.Syllable;
+                return other != null && Degree == other.Degree;
             }
 
             public override int GetHashCode()
@@ -18,7 +18,7 @@ namespace SolresolConverter.Analyzer
 
             public override string? ToString()
             {
-                return Syllable.ToString();
+                return Degree.ToString();
             }
         }
         public record class WordRec(List<SyllableRec> Syllables, PartOfSpeech PartOfSpeech, int AccentIdx, int InvertedAccentIdx, int PluralIdx, int FeminineIdx, string Prefix, string Suffix, string OriginalWord, bool IsValidSorso)
