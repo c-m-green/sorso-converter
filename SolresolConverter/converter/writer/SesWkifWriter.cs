@@ -137,6 +137,8 @@ namespace SolresolConverter.Writer
             {
                 var currentWord = sorsoRec.Words[wrdIdx];
 
+                string specialCase = CheckSpecialCases(currentWord);
+
                 if (currentWord.IsValidSorso)
                 {
                     if (firstWrd == -1)
@@ -342,6 +344,11 @@ namespace SolresolConverter.Writer
                     }
                     if (!inCompoundWord || wrdIdx == lastWrd)
                     {
+                        if (!string.IsNullOrEmpty(specialCase))
+                        {
+                            sesWord.Clear();
+                            sesWord.Append(specialCase);
+                        }
                         if (inCompoundWord)
                         {
                             sesWord.Insert(0, sorsoRec.Words[firstWrd].Prefix);
@@ -374,6 +381,15 @@ namespace SolresolConverter.Writer
                 }
             }
             return textOut.ToString();
+        }
+
+        private string CheckSpecialCases(WordRec input)
+        {
+            if (input.Syllables.Count == 1 && input.Syllables[0].Degree == SorsoSyllableDegree.Sol && input.FeminineIdx == 0)
+            {
+                return input.Syllables[0].IsCapitalized || input.Syllables[0].IsAllCaps ? "Ū" : "ū";
+            }
+            return "";
         }
     }
 }
