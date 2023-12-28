@@ -86,7 +86,7 @@ namespace SolresolConverter.Analyzer
                         if (!string.IsNullOrEmpty(suffix))
                         {
                             // Found a punctuation mark in the middle of a word?
-                            System.Diagnostics.Debug.WriteLine($"Unexpected punctuation: {currentChar} in {currentWord}");
+                            System.Diagnostics.Debug.WriteLine($"Unexpected extension of word: {currentChar} in {currentWord}");
                             isValidSorso = false;
                             resetSyllable();
                             continue;
