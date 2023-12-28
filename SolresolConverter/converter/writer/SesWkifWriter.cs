@@ -344,14 +344,18 @@ namespace SolresolConverter.Writer
                         if (inCompoundWord)
                         {
                             sesWord.Insert(0, sorsoRec.Words[firstWrd].Prefix);
+                            if (firstWrd > 0)
+                            {
+                                sesWord.Insert(0, " ");
+                            }
                         }
                         else
                         {
                             sesWord.Insert(0, currentWord.Prefix);
-                        }
-                        if (wrdIdx > 0)
-                        {
-                            sesWord.Insert(0, " ");
+                            if (wrdIdx > 0)
+                            {
+                                sesWord.Insert(0, " ");
+                            }
                         }
                         sesWord.Append(currentWord.Suffix);
                         textOut.Append(sesWord);
