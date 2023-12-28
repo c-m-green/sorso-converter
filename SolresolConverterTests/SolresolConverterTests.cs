@@ -42,8 +42,8 @@ namespace SolresolConverterTests
         {
             var rec = InputAnalyzer.ReadInputText(s, src);
             Assert.IsTrue(rec.Words[0].IsValidSorso);
-            Assert.AreEqual(SorsoSyllableDegree.Sol, rec.Words[0].Syllables[solIdx].Syllable);
-            Assert.AreEqual(SorsoSyllableDegree.La, rec.Words[0].Syllables[laIdx].Syllable);
+            Assert.AreEqual(SorsoSyllableDegree.Sol, rec.Words[0].Syllables[solIdx].Degree);
+            Assert.AreEqual(SorsoSyllableDegree.La, rec.Words[0].Syllables[laIdx].Degree);
         }
 
         [TestCase("sollla", SolresolFormat.Sorso)]
@@ -64,7 +64,7 @@ namespace SolresolConverterTests
         {
             var rec = InputAnalyzer.ReadInputText(s, src);
             Assert.IsTrue(rec.Words[0].IsValidSorso);
-            Assert.AreEqual(SorsoSyllableDegree.Si, rec.Words[0].Syllables[siIdx].Syllable);
+            Assert.AreEqual(SorsoSyllableDegree.Si, rec.Words[0].Syllables[siIdx].Degree);
         }
     }
 }
