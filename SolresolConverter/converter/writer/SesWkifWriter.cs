@@ -49,7 +49,6 @@ namespace SolresolConverter.Writer
                     continue;
                 }
                 int startIdx = -1;
-                int endIdx = -1;
                 int idx = 0;
                 for (int sorsoWdRcIdx = 0; sorsoWdRcIdx < sorsoRec.Words.Count; sorsoWdRcIdx++)
                 {
@@ -72,35 +71,37 @@ namespace SolresolConverter.Writer
                             // This word (in the text) is already combined with something else.
                             idx = 0;
                             startIdx = -1;
-                            endIdx = -1;
                         }
                         else
                         {
                             if (startIdx == -1)
                             {
                                 startIdx = sorsoWdRcIdx;
+                                idx++;
                             }
                             else
                             {
-                                endIdx = sorsoWdRcIdx;
+                                if (sorsoWdRcIdx - startIdx == compoundWordParts.Words.Count - 1)
+                                {
+                                    compoundWordBounds.Add(new Tuple<int, int, PartOfSpeech?>(startIdx, sorsoWdRcIdx, compoundWordRec.Override));
+                                    startIdx = -1;
+                                    idx = 0;
+                                } else
+                                {
+                                    idx++;
+                                }
                             }
-                            idx++;
                         }
                     }
                     else
                     {
-                        if (endIdx > -1 && endIdx - startIdx == compoundWordParts.Words.Count - 1)
-                        {
-                            compoundWordBounds.Add(new Tuple<int, int, PartOfSpeech?>(startIdx, endIdx, compoundWordRec.Override));
-                        }
                         if (idx > 0)
                         {
                             // Back up to try this one again with the beginning of the compound word.
                             sorsoWdRcIdx--;
                             idx = 0;
+                            startIdx = -1;
                         }
-                        startIdx = -1;
-                        endIdx = -1;
                     }
                 }
             }
