@@ -161,12 +161,12 @@ namespace SolresolConverter.Writer
                     else
                     {
                         if (currentWord.AccentIdx == -1 && currentWord.InvertedAccentIdx == -1
-                            && currentWord.PluralIdx != currentWord.Syllables.Count - 1)
+                            && currentWord.PluralIdx != -1 && currentWord.PluralIdx != currentWord.Syllables.Count - 1)
                         {
                             isVowel = currentWord.PluralIdx % 2 == 0;
                         }
                         else if (currentWord.AccentIdx == -1 && currentWord.InvertedAccentIdx == -1
-                            && currentWord.FeminineIdx != currentWord.Syllables.Count - 1)
+                            && currentWord.FeminineIdx != -1 && currentWord.FeminineIdx != currentWord.Syllables.Count - 1)
                         {
                             isVowel = currentWord.FeminineIdx % 2 == 0;
                         }
