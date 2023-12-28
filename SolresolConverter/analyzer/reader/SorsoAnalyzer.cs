@@ -83,6 +83,7 @@ namespace SolresolConverter.Analyzer
                     char currentChar = char.ToLowerInvariant(currentWord[charIdx]);
                     if (isValidConsonant(currentChar))
                     {
+                        isPastPrefix = true;
                         if (!string.IsNullOrEmpty(suffix))
                         {
                             // Found a punctuation mark in the middle of a word?
@@ -91,11 +92,10 @@ namespace SolresolConverter.Analyzer
                             resetSyllable();
                             continue;
                         }
-                        if (!isPastPrefix)
+                        if (syllableIdx == 0)
                         {
                             // Check capitalization of first actual valid letter
                             isCapitalized = char.GetUnicodeCategory(currentWord[charIdx]) == UnicodeCategory.UppercaseLetter;
-                            isPastPrefix = true;
                         }
                         isAllCaps = isAllCaps && isCapitalized && char.GetUnicodeCategory(currentWord[charIdx]) == UnicodeCategory.UppercaseLetter;
                         switch (syllableIdx)
