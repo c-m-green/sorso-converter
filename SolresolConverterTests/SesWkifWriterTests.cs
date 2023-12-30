@@ -101,5 +101,16 @@ namespace SolresolConverterTests
             };
             Assert.AreEqual(expected, ConvertSolresol(input, SolresolFormat.Sorso, SolresolFormat.SesCmgreen, compoundWords));
         }
+
+        [TestCase("dǒremi", "òkı")]
+        [TestCase("dorěmi", "pèm")]
+        [TestCase("doremǐ", "okì")]
+        [TestCase("dôremi", "ókı")]
+        [TestCase("dorêmi", "pém")]
+        [TestCase("doremî", "okí")]
+        public void ConverterToSesWkif_AccentDirection_IsRepresentedInOutput(string input, string expected)
+        {
+            Assert.AreEqual(expected, ConvertSolresol(input, SolresolFormat.Sorso, SolresolFormat.SesCmgreen));
+        }
     }
 }

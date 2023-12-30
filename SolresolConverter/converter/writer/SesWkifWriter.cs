@@ -311,7 +311,7 @@ namespace SolresolConverter.Writer
                                 || currentWord.PluralIdx == syllableIdx && syllableIdx < currentWord.Syllables.Count - 1
                                 || currentWord.FeminineIdx == syllableIdx && syllableIdx < currentWord.Syllables.Count - 1)
                             {
-                                sesWord.Append(currentWord.Syllables.Count < 3 && currentWord.FeminineIdx == -1 ? sesWkifGraveAccentVowels[sesIdx] : sesWkifAcuteAccentVowels[sesIdx]);
+                                sesWord.Append(currentWord.InvertedAccentIdx == syllableIdx ? sesWkifGraveAccentVowels[sesIdx] : sesWkifAcuteAccentVowels[sesIdx]);
                             }
                             else
                             {
