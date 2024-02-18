@@ -112,5 +112,16 @@ namespace SolresolConverterTests
         {
             Assert.AreEqual(expected, ConvertSolresol(input, SolresolFormat.Sorso, SolresolFormat.SesCmgreen));
         }
+
+        [Test]
+        public void ConverterToSesWkif_NounReplacement_DoesNotCrash()
+        {
+            string input = "Solresol lamidôre";
+            List<CompoundWord> compoundWords = new()
+            {
+                new CompoundWord(input, PartOfSpeech.Noun)
+            };
+            Assert.AreEqual("Úkuriṗe", ConvertSolresol(input, SolresolFormat.Sorso, SolresolFormat.SesCmgreen, compoundWords));
+        }
     }
 }
