@@ -115,7 +115,7 @@ namespace SolresolConverter.Writer
             char[] sesWkifConsonantsDottedLower = new char[] { 'ṗ', 'ḳ', 'ṁ', 'ḟ', 'ṡ', 'ḷ', 'ṫ' };
             char[] sesWkifAltConsonantsDottedUpper = new char[] { 'Ḃ', 'Ġ', 'Ṅ', 'Ṿ', 'Ż', 'Ṙ', 'Ḍ' };
             char[] sesWkifAltConsonantsDottedLower = new char[] { 'ḃ', 'ġ', 'ṅ', 'ṿ', 'ż', 'ṙ', 'ḍ' };
-            char[] sesWkifVowelsDottedUpper = new char[] { 'Ȯ', 'Ė', 'İ', 'Ȧ', 'Ů', 'Ẇ', 'Ẏ' };
+            char[] sesWkifVowelsDottedUpper = new char[] { 'Ȯ', 'Ė', 'İ', 'Ȧ', 'Ụ', 'Ẇ', 'Ẏ' };
             char[] sesWkifVowelsDottedLower = new char[] { 'ȯ', 'ė', 'i', 'ȧ', 'ụ', 'ẇ', 'ẏ' };
             char[] sesWkifDoubleAccents = new char[] { 'ô', 'ê', 'î', 'â', 'û', 'ŵ', 'ŷ' };
 
