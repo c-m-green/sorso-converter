@@ -45,6 +45,7 @@ namespace SolresolConverter.Converter
         {
             return dest switch
             {
+                SolresolFormat.Ses => new SesWriter().Write(sorsoRec),
                 SolresolFormat.SesCmgreen => new SesWkifWriter().Write(sorsoRec, compoundWords ?? new List<CompoundWord>()),
                 _ => throw new NotImplementedException(),
             };
