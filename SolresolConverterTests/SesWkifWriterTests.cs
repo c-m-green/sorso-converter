@@ -121,7 +121,7 @@ namespace SolresolConverterTests
             {
                 new CompoundWord(input, PartOfSpeech.Noun)
             };
-            Assert.AreEqual("Úkuriṗe", ConvertSolresol(input, SolresolFormat.Sorso, SolresolFormat.SesCmgreen, compoundWords));
+            Assert.AreEqual("Úkurıṗe", ConvertSolresol(input, SolresolFormat.Sorso, SolresolFormat.SesCmgreen, compoundWords));
         }
     }
 }

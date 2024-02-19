@@ -279,7 +279,7 @@ namespace SolresolConverter.Writer
                                         }
                                         else
                                         {
-                                            vowelIdx = Array.IndexOf(sesWkifVowels, sesWord[replacementIndex]);
+                                            vowelIdx = Array.IndexOf(sesWkifVowels, char.ToLower(sesWord[replacementIndex]));
                                             sesWord[replacementIndex] = char.GetUnicodeCategory(sesWord[replacementIndex]) == UnicodeCategory.UppercaseLetter
                                                 ? char.ToUpper(sesWkifAcuteAccentVowels[vowelIdx])
                                                 : sesWkifAcuteAccentVowels[vowelIdx];
