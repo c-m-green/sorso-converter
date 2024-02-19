@@ -63,10 +63,10 @@ namespace SolresolConverter.Analyzer
                 string prefix = "", suffix = "";
                 SorsoSyllableDegree sorsoSyllableDegree;
                 int syllableIdx;
-                int accentIdx = -1;
-                int invertedAccentIdx = -1;
-                int pluralIdx = -1;
-                int feminineIdx = -1;
+                List<int> accentIndices = new();
+                List<int> invertedAccentIndices = new();
+                List<int> pluralIndices = new();
+                List<int> feminineIndices = new();
                 bool isAllCaps = true;
                 bool isCapitalized = false;
                 bool isValidSorso = true;
@@ -135,12 +135,12 @@ namespace SolresolConverter.Analyzer
                                 // Plural indicator if the consonants match.
                                 if (currentChar == sorsoConsonants[(int)sorsoSyllableDegree])
                                 {
-                                    if (pluralIdx != -1)
+                                    if (pluralIndices.Count > 0)
                                     {
                                         System.Diagnostics.Debug.WriteLine($"Too many plural indicators in {currentWord}");
                                         isValidSorso = false;
                                     }
-                                    pluralIdx = syllableRecs.Count;
+                                    pluralIndices.Add(syllableRecs.Count);
                                     syllableIdx++;
                                 }
                                 else
@@ -172,39 +172,39 @@ namespace SolresolConverter.Analyzer
                             isAllCaps = isAllCaps && isCapitalized && char.GetUnicodeCategory(currentWord[charIdx]) == UnicodeCategory.UppercaseLetter;
                             if (currentChar == pluralAccents[(int)sorsoSyllableDegree])
                             {
-                                if (pluralIdx != -1)
+                                if (pluralIndices.Count > 0)
                                 {
                                     System.Diagnostics.Debug.WriteLine($"Too many plural indicators in {currentWord}");
                                     isValidSorso = false;
                                 }
-                                pluralIdx = syllableRecs.Count;
+                                pluralIndices.Add(syllableRecs.Count);
                             }
                             else if (currentChar == partOfSpeechAccents[(int)sorsoSyllableDegree])
                             {
-                                if (accentIdx != -1 || invertedAccentIdx != -1)
+                                if (accentIndices.Count > 0 || invertedAccentIndices.Count > 0)
                                 {
                                     System.Diagnostics.Debug.WriteLine($"Too many part of speech indicators in {currentWord}");
                                     isValidSorso = false;
                                 }
-                                accentIdx = syllableRecs.Count;
+                                accentIndices.Add(syllableRecs.Count);
                             }
                             else if (currentChar == partOfSpeechAltAccents[(int)sorsoSyllableDegree])
                             {
-                                if (accentIdx != -1 || invertedAccentIdx != -1)
+                                if (accentIndices.Count > 0 || invertedAccentIndices.Count > 0)
                                 {
                                     System.Diagnostics.Debug.WriteLine($"Too many part of speech indicators in {currentWord}");
                                     isValidSorso = false;
                                 }
-                                invertedAccentIdx = syllableRecs.Count;
+                                invertedAccentIndices.Add(syllableRecs.Count);
                             }
                             else if (currentChar == feminineAccents[(int)sorsoSyllableDegree])
                             {
-                                if (feminineIdx != -1)
+                                if (feminineIndices.Count > 0)
                                 {
                                     System.Diagnostics.Debug.WriteLine($"Too many feminine indicators in {currentWord}");
                                     isValidSorso = false;
                                 }
-                                feminineIdx = syllableRecs.Count;
+                                feminineIndices.Add(syllableRecs.Count);
                             }
 
                             if (isExpectedConsonant(char.ToLowerInvariant(currentWord[charIdx - syllableIdx]), (int)sorsoSyllableDegree))
@@ -215,12 +215,12 @@ namespace SolresolConverter.Analyzer
                                     // Probably a feminine indicator (double vowel)
                                     if (isExpectedConsonant(char.ToLowerInvariant(currentWord[charIdx - 1]), (int)sorsoSyllableDegree))
                                     {
-                                        if (feminineIdx != -1)
+                                        if (feminineIndices.Count > 0)
                                         {
                                             System.Diagnostics.Debug.WriteLine($"Too many feminine indicators in {currentWord}");
                                             isValidSorso = false;
                                         }
-                                        feminineIdx = syllableRecs.Count;
+                                        feminineIndices.Add(syllableRecs.Count);
                                         syllableIdx++;
                                     }
                                     else
@@ -338,10 +338,10 @@ namespace SolresolConverter.Analyzer
                 // Check for illegal accent placement.
                 if (syllableRecs.Count > 4)
                 {
-                    if (accentIdx > 1 && accentIdx < syllableRecs.Count - 2
-                        || invertedAccentIdx > 1 && invertedAccentIdx < syllableRecs.Count - 2
-                        || feminineIdx > 1 && feminineIdx < syllableRecs.Count - 2
-                        || pluralIdx > 1 && pluralIdx < syllableRecs.Count - 2)
+                    if (accentIndices.Count > 0 && accentIndices[0] > 1 && accentIndices[0] < syllableRecs.Count - 2
+                        || invertedAccentIndices.Count > 0 && invertedAccentIndices[0] > 1 && invertedAccentIndices[0] < syllableRecs.Count - 2
+                        || feminineIndices.Count > 0 && feminineIndices[0] > 1 && feminineIndices[0] < syllableRecs.Count - 2
+                        || pluralIndices.Count > 0 && pluralIndices[0] > 1 && pluralIndices[0] < syllableRecs.Count - 2)
                     {
                         System.Diagnostics.Debug.WriteLine($"Invalid accent position in {currentWord}");
                         isValidSorso = false;
@@ -352,19 +352,20 @@ namespace SolresolConverter.Analyzer
                 PartOfSpeech partOfSpeech = PartOfSpeech.VerbOrUnspecified;
                 if (isValidSorso && syllableRecs.Count >= 3)
                 {
-                    if (accentIdx != -1 || invertedAccentIdx != -1)
+                    if (accentIndices.Count > 0 || invertedAccentIndices.Count > 0)
                     {
-                        partOfSpeech = (PartOfSpeech)(Math.Max(accentIdx, invertedAccentIdx) - Math.Max(0, syllableRecs.Count - 4));
+                        partOfSpeech = (PartOfSpeech)(Math.Max(accentIndices.Count > 0 ? accentIndices[0] : -1,
+                            invertedAccentIndices.Count > 0 ? invertedAccentIndices[0] : -1) - Math.Max(0, syllableRecs.Count - 4));
                     }
-                    else if (accentIdx == -1 && invertedAccentIdx == -1
-                        && pluralIdx != -1 && pluralIdx != syllableRecs.Count - 1)
+                    else if (accentIndices.Count == 0 && invertedAccentIndices.Count == 0
+                        && pluralIndices.Count > 0 && pluralIndices[0] != syllableRecs.Count - 1)
                     {
-                        partOfSpeech = (PartOfSpeech)(pluralIdx - Math.Max(0, syllableRecs.Count - 4));
+                        partOfSpeech = (PartOfSpeech)(pluralIndices[0] - Math.Max(0, syllableRecs.Count - 4));
                     }
-                    else if (accentIdx == -1 && invertedAccentIdx == -1
-                        && feminineIdx != -1 && feminineIdx != syllableRecs.Count - 1)
+                    else if (accentIndices.Count == 0 && invertedAccentIndices.Count == 0
+                        && feminineIndices.Count > 0 && feminineIndices[0] != syllableRecs.Count - 1)
                     {
-                        partOfSpeech = (PartOfSpeech)(feminineIdx - Math.Max(0, syllableRecs.Count - 4));
+                        partOfSpeech = (PartOfSpeech)(feminineIndices[0] - Math.Max(0, syllableRecs.Count - 4));
                     }
 
                     // Postfix for 3 letter words
@@ -378,7 +379,7 @@ namespace SolresolConverter.Analyzer
                 {
                     System.Diagnostics.Debug.WriteLine($"WARN: {currentWord} is not valid Solresol input");
                 }
-                wordRecs.Add(new WordRec(syllableRecs, partOfSpeech, accentIdx, invertedAccentIdx, pluralIdx, feminineIdx, prefix, suffix, currentWord, isValidSorso));
+                wordRecs.Add(new WordRec(syllableRecs, partOfSpeech, accentIndices.ToArray(), invertedAccentIndices.ToArray(), pluralIndices.ToArray(), feminineIndices.ToArray(), prefix, suffix, currentWord, isValidSorso));
             } // End word
 
             return new SorsoRec(wordRecs, SolresolFormat.Sorso);

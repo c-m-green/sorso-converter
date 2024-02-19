@@ -51,7 +51,7 @@ namespace SolresolConverter.Writer
                     sesWord.Append(syllableBuilder);
                     isVowel = !isVowel;
                 }
-                if (word.PluralIdx > -1)
+                if (word.PluralIndices.Length > 0)
                 {
                     if (isAllCapsWord)
                     {
@@ -68,7 +68,7 @@ namespace SolresolConverter.Writer
                         }
                     }
                 }
-                if (word.FeminineIdx > -1)
+                if (word.FeminineIndices.Length > 0)
                 {
                     sesWord.Append(isAllCapsWord ? " MU" : " mu");
                 }

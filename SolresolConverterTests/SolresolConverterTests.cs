@@ -54,7 +54,7 @@ namespace SolresolConverterTests
         {
             var rec = InputAnalyzer.ReadInputText(s, src);
             Assert.IsTrue(rec.Words[0].IsValidSorso);
-            Assert.AreNotEqual(-1, rec.Words[0].PluralIdx);
+            Assert.AreNotEqual(-1, rec.Words[0].PluralIndices[0]);
         }
 
         [TestCase("sidodo", SolresolFormat.Sorso, 0)]

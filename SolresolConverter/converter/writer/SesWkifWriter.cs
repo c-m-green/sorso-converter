@@ -163,19 +163,20 @@ namespace SolresolConverter.Writer
                     }
                     else
                     {
-                        if (currentWord.AccentIdx == -1 && currentWord.InvertedAccentIdx == -1
-                            && currentWord.PluralIdx != -1 && currentWord.PluralIdx != currentWord.Syllables.Count - 1)
+                        if (currentWord.AccentIndices.Length == 0 && currentWord.InvertedAccentIndices.Length == 0
+                            && currentWord.PluralIndices.Length > 0 && currentWord.PluralIndices[0] != currentWord.Syllables.Count - 1)
                         {
-                            isVowel = currentWord.PluralIdx % 2 == 0;
+                            isVowel = currentWord.PluralIndices[0] % 2 == 0;
                         }
-                        else if (currentWord.AccentIdx == -1 && currentWord.InvertedAccentIdx == -1
-                            && currentWord.FeminineIdx != -1 && currentWord.FeminineIdx != currentWord.Syllables.Count - 1)
+                        else if (currentWord.AccentIndices.Length == 0 && currentWord.InvertedAccentIndices.Length == 0
+                            && currentWord.FeminineIndices.Length > 0 && currentWord.FeminineIndices[0] != currentWord.Syllables.Count - 1)
                         {
-                            isVowel = currentWord.FeminineIdx % 2 == 0;
+                            isVowel = currentWord.FeminineIndices[0] % 2 == 0;
                         }
-                        else if (currentWord.AccentIdx != -1 || currentWord.InvertedAccentIdx != -1)
+                        else if (currentWord.AccentIndices.Length > 0 || currentWord.InvertedAccentIndices.Length > 0)
                         {
-                            isVowel = Math.Max(currentWord.AccentIdx, currentWord.InvertedAccentIdx) % 2 == 0;
+                            isVowel = Math.Max(currentWord.AccentIndices.Length > 0 ? currentWord.AccentIndices[0] : -1,
+                                currentWord.InvertedAccentIndices.Length > 0 ? currentWord.InvertedAccentIndices[0] : -1) % 2 == 0;
                         }
                         isVowel = isVowel || currentWord.Syllables.Count == 1;
                     }
@@ -188,11 +189,11 @@ namespace SolresolConverter.Writer
                         if (inCompoundWord)
                         {
                             // Compound word letters (dots or plain)
-                            bool hasNoRegAccent = currentWord.AccentIdx == -1 && currentWord.InvertedAccentIdx == -1;
-                            if (syllableIdx == currentWord.AccentIdx
-                                || syllableIdx == currentWord.InvertedAccentIdx
-                                || hasNoRegAccent && syllableIdx == currentWord.PluralIdx
-                                || hasNoRegAccent && syllableIdx == currentWord.FeminineIdx)
+                            bool hasNoRegAccent = currentWord.AccentIndices.Length == 0 && currentWord.InvertedAccentIndices.Length == 0;
+                            if (currentWord.AccentIndices.Length > 0 && syllableIdx == currentWord.AccentIndices[0]
+                                || currentWord.InvertedAccentIndices.Length > 0 && syllableIdx == currentWord.InvertedAccentIndices[0]
+                                || hasNoRegAccent && currentWord.PluralIndices.Length > 0 && syllableIdx == currentWord.PluralIndices[0]
+                                || hasNoRegAccent && currentWord.FeminineIndices.Length > 0 && syllableIdx == currentWord.FeminineIndices[0])
                             {
                                 if (syllableIdx == 0 && wrdIdx != firstWrd)
                                 {
@@ -288,13 +289,13 @@ namespace SolresolConverter.Writer
                                 }
 
                                 // Add compound word endings, suffix
-                                if (sorsoRec.Words[firstWrd].FeminineIdx != -1)
+                                if (sorsoRec.Words[firstWrd].FeminineIndices.Length > 0)
                                 {
                                     sesWord.Append(syllable.IsAllCaps ? "NU" : "nu");
                                 }
-                                if (sorsoRec.Words[firstWrd].PluralIdx != -1)
+                                if (sorsoRec.Words[firstWrd].PluralIndices.Length > 0)
                                 {
-                                    if (isVowel || sorsoRec.Words[firstWrd].FeminineIdx != -1)
+                                    if (isVowel || sorsoRec.Words[firstWrd].FeminineIndices.Length > 0)
                                     {
                                         sesWord.Append(syllable.IsAllCaps ? 'Ð' : 'ð');
                                     }
@@ -307,11 +308,12 @@ namespace SolresolConverter.Writer
                         }
                         else
                         {
-                            if (currentWord.AccentIdx == syllableIdx || currentWord.InvertedAccentIdx == syllableIdx
-                                || currentWord.PluralIdx == syllableIdx && syllableIdx < currentWord.Syllables.Count - 1
-                                || currentWord.FeminineIdx == syllableIdx && syllableIdx < currentWord.Syllables.Count - 1)
+                            if (currentWord.AccentIndices.Length > 0 && currentWord.AccentIndices[0] == syllableIdx
+                                || currentWord.InvertedAccentIndices.Length > 0 && currentWord.InvertedAccentIndices[0] == syllableIdx
+                                || currentWord.PluralIndices.Length > 0 && currentWord.PluralIndices[0] == syllableIdx && syllableIdx < currentWord.Syllables.Count - 1
+                                || currentWord.FeminineIndices.Length > 0 && currentWord.FeminineIndices[0] == syllableIdx && syllableIdx < currentWord.Syllables.Count - 1)
                             {
-                                sesWord.Append(currentWord.InvertedAccentIdx == syllableIdx ? sesWkifGraveAccentVowels[sesIdx] : sesWkifAcuteAccentVowels[sesIdx]);
+                                sesWord.Append(currentWord.InvertedAccentIndices.Length > 0 && currentWord.InvertedAccentIndices[0] == syllableIdx ? sesWkifGraveAccentVowels[sesIdx] : sesWkifAcuteAccentVowels[sesIdx]);
                             }
                             else
                             {
@@ -323,13 +325,13 @@ namespace SolresolConverter.Writer
                             }
                             if (syllableIdx == currentWord.Syllables.Count - 1)
                             {
-                                if (currentWord.FeminineIdx != -1)
+                                if (currentWord.FeminineIndices.Length > 0)
                                 {
                                     sesWord.Append(syllable.IsAllCaps ? "NU" : "nu");
                                 }
-                                if (currentWord.PluralIdx != -1)
+                                if (currentWord.PluralIndices.Length > 0)
                                 {
-                                    if (isVowel || currentWord.FeminineIdx != -1)
+                                    if (isVowel || currentWord.FeminineIndices.Length > 0)
                                     {
                                         sesWord.Append(syllable.IsAllCaps ? 'Ð' : 'ð');
                                     }
@@ -385,7 +387,7 @@ namespace SolresolConverter.Writer
 
         private string CheckSpecialCases(WordRec input)
         {
-            if (input.Syllables.Count == 1 && input.Syllables[0].Degree == SorsoSyllableDegree.Sol && input.FeminineIdx == 0)
+            if (input.Syllables.Count == 1 && input.Syllables[0].Degree == SorsoSyllableDegree.Sol && input.FeminineIndices.Length > 0 && input.FeminineIndices[0] == 0)
             {
                 return input.Syllables[0].IsCapitalized || input.Syllables[0].IsAllCaps ? "Ū" : "ū";
             }
