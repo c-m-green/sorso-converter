@@ -251,8 +251,8 @@ namespace SolresolConverter.Writer
                                         while (search > 1)
                                         {
                                             if (Array.IndexOf(sesWkifVowels, sesWord[search]) != -1
-                                                || Array.IndexOf(sesWkifVowelsDottedLower, sesWord) != -1
-                                                || Array.IndexOf(sesWkifVowelsDottedUpper, sesWord) != -1)
+                                                || Array.IndexOf(sesWkifVowelsDottedLower, sesWord[search]) != -1
+                                                || Array.IndexOf(sesWkifVowelsDottedUpper, sesWord[search]) != -1)
                                             {
                                                 replacementIndex = search;
                                                 break;
