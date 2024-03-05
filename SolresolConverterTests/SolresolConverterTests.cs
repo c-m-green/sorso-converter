@@ -1,4 +1,4 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SolresolConverter;
 using SolresolConverter.Analyzer;
 using SolresolConverter.Converter;
@@ -65,6 +65,17 @@ namespace SolresolConverterTests
             var rec = InputAnalyzer.ReadInputText(s, src);
             Assert.IsTrue(rec.Words[0].IsValidSorso);
             Assert.AreEqual(SorsoSyllableDegree.Si, rec.Words[0].Syllables[siIdx].Degree);
+        }
+
+        [TestCase("fâlare", PartOfSpeech.Noun)]
+        [TestCase("falâre", PartOfSpeech.Adjective)]
+        [TestCase("falarê", PartOfSpeech.Adverb)]
+        [TestCase("falarě", PartOfSpeech.Adverb)]
+        public void WordAnalyzer_InvertedAccent_DetectsPartOfSpeechAsExpected(string s, PartOfSpeech partOfSpeech)
+        {
+            var rec = InputAnalyzer.ReadInputText(s, SolresolFormat.Sorso);
+            Assert.IsTrue(rec.Words[0].IsValidSorso);
+            Assert.AreEqual(rec.Words[0].PartOfSpeech, partOfSpeech);
         }
     }
 }
