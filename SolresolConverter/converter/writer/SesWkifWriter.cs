@@ -248,7 +248,7 @@ namespace SolresolConverter.Writer
                                         break;
                                     case PartOfSpeech.Adjective:
                                         int search = sesWord.Length - 3;
-                                        while (search > 3)
+                                        while (search > 1)
                                         {
                                             if (Array.IndexOf(sesWkifVowels, sesWord[search]) != -1
                                                 || Array.IndexOf(sesWkifVowelsDottedLower, sesWord) != -1
