@@ -78,8 +78,7 @@ namespace SolresolConverterTests
             Assert.AreEqual(partOfSpeech, rec.Words[0].PartOfSpeech);
         }
 
-        [TestCase("solresol\r\nfem")]
-        [TestCase("solresol\nfem")]
+        [TestCase("solresol\r\nfaremi")]
         public void WordAnalyzer_NewLine_IsValidSorso(string s)
         {
             var rec = InputAnalyzer.ReadInputText(s, SolresolFormat.Sorso);

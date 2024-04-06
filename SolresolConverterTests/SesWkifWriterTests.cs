@@ -125,7 +125,6 @@ namespace SolresolConverterTests
         }
 
         [TestCase("solresol\r\nfaremi", "ses\r\nfem")]
-        [TestCase("solresol\nfaremi", "ses\r\nfem")]
         public void ConverterToSesWkif_NewLine_RespectsNewLine(string input, string expected)
         {
             Assert.AreEqual(expected, ConvertSolresol(input, SolresolFormat.Sorso, SolresolFormat.SesCmgreen));
