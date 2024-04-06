@@ -75,7 +75,17 @@ namespace SolresolConverterTests
         {
             var rec = InputAnalyzer.ReadInputText(s, SolresolFormat.Sorso);
             Assert.IsTrue(rec.Words[0].IsValidSorso);
-            Assert.AreEqual(rec.Words[0].PartOfSpeech, partOfSpeech);
+            Assert.AreEqual(partOfSpeech, rec.Words[0].PartOfSpeech);
+        }
+
+        [TestCase("solresol\r\nfem")]
+        [TestCase("solresol\nfem")]
+        public void WordAnalyzer_NewLine_IsValidSorso(string s)
+        {
+            var rec = InputAnalyzer.ReadInputText(s, SolresolFormat.Sorso);
+            Assert.AreEqual(2, rec.Words.Count);
+            Assert.IsTrue(rec.Words[0].IsValidSorso);
+            Assert.IsTrue(rec.Words[1].IsValidSorso);
         }
     }
 }
