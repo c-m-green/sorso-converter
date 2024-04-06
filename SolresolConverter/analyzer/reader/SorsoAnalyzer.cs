@@ -296,11 +296,7 @@ namespace SolresolConverter.Analyzer
                         {
                             if (isPastPrefix)
                             {
-                                // Tolerate a trailing period, comma, colon, etc.
-                                if (charIdx == currentWord.Length - 1)
-                                {
-                                    suffix = $"{suffix}{currentChar}";
-                                }
+                                suffix = $"{suffix}{currentChar}";
                             }
                             else
                             {
