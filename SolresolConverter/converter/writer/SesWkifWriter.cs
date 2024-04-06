@@ -360,7 +360,7 @@ namespace SolresolConverter.Writer
                         if (inCompoundWord)
                         {
                             sesWord.Insert(0, sorsoRec.Words[firstWrd].Prefix);
-                            if (firstWrd > 0 && !sorsoRec.Words[firstWrd - 1].Suffix.EndsWith('\n'))
+                            if (firstWrd > 0 && !sorsoRec.Words[firstWrd - 1].Suffix.EndsWith('\r'))
                             {
                                 sesWord.Insert(0, " ");
                             }
@@ -368,7 +368,7 @@ namespace SolresolConverter.Writer
                         else
                         {
                             sesWord.Insert(0, currentWord.Prefix);
-                            if (wrdIdx > 0 && !sorsoRec.Words[wrdIdx - 1].Suffix.EndsWith('\n'))
+                            if (wrdIdx > 0 && !sorsoRec.Words[wrdIdx - 1].Suffix.EndsWith('\r'))
                             {
                                 sesWord.Insert(0, " ");
                             }

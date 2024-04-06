@@ -57,7 +57,7 @@ namespace SolresolConverter.Analyzer
             List<WordRec> wordRecs = new();
             foreach (string wordIn in wordsIn)
             {
-                string[] currentWords = wordIn.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                string[] currentWords = wordIn.Split(new string[] { Environment.NewLine, "\n", "\r" }, StringSplitOptions.None);
                 for (int wordIdx = 0; wordIdx < currentWords.Length; wordIdx++)
                 {
                     string currentWord = currentWords[wordIdx];
@@ -329,7 +329,8 @@ namespace SolresolConverter.Analyzer
 
                     if (wordIdx < currentWords.Length - 1)
                     {
-                        suffix += "\r\n";
+                        // The only app currently using this lib uses \r for new lines.
+                        suffix += "\r";
                     }
 
                     // Check for a broken syllable at the end.
