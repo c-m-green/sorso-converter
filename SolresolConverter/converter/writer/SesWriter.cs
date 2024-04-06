@@ -74,7 +74,7 @@ namespace SolresolConverter.Writer
                 }
                 sesWord.Insert(0, word.Prefix);
                 sesWord.Append(word.Suffix);
-                if (strOut.Length > 0)
+                if (strOut.Length > 0 && !strOut.ToString().EndsWith('\r'))
                 {
                     strOut.Append(' ');
                 }
